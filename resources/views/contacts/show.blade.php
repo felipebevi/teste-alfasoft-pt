@@ -23,12 +23,13 @@
             <td>{{ $contact->email }}</td>
         </tr>
     </table>
-
-    <a href="{{ route('contacts.edit', $contact) }}" class="btn btn-warning">Edit</a>
-    <form action="{{ route('contacts.destroy', $contact) }}" method="POST" class="d-inline">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-    </form>
+    @auth
+        <a href="{{ route('contacts.edit', $contact) }}" class="btn btn-warning">Edit</a>
+        <form action="{{ route('contacts.destroy', $contact) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+        </form>
+    @endauth
     <a href="{{ route('contacts.index') }}" class="btn btn-secondary">Back to List</a>
 @endsection

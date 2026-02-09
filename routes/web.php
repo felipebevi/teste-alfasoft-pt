@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::resource('contacts', ContactController::class);
+
+Route::middleware('auth')->group(function () {
+    Route::resource('contacts', ContactController::class)->except(['index', 'show']);
+});
 
 Route::get('/', function () {
     return redirect()->route('contacts.index');
